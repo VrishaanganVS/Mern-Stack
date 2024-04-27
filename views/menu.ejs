@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu - Food Ordering & Delivery App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5dc;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background-color: darkgoldenrod;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: darkolivegreen;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 18px;
+    }
+
+    .menu-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-gap: 20px;
+      margin-top: 20px;
+    }
+
+    .menu-item {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .menu-item-content {
+      padding: 20px;
+    }
+
+    .menu-item h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .menu-item p {
+      margin-bottom: 0;
+      color: #666;
+    }
+
+    footer {
+      background-color: darkgoldenrod;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      bottom: 0;
+      width: 100%;
+      position: fixed;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Menu - Food Ordering & Delivery App</h1>
+  </header>
+  
+  <nav>
+    <a href="index.ejs">Home</a>
+    <a href="menu.ejs">Menu</a>
+    <a href="#">Services</a>
+    <a href="features.ejs">Features</a>
+    <a href="signup.ejs">Sign-up</a>
+    <a href="login.ejs">Login</a>
+  </nav>
+
+  <div class="container">
+    <div class="menu-section">
+      <div class="menu-item">
+        <img src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg" alt="Pizza">
+        <div class="menu-item-content">
+          <h2>Pizza</h2>
+          <p>Delicious pizza with various toppings.</p>
+          <p>Price: $10</p>
+        </div>
+      </div>
+      <div class="menu-item">
+        <img src="https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=" alt="Burger">
+        <div class="menu-item-content">
+          <h2>Burger</h2>
+          <p>Juicy burger with cheese and fries.</p>
+          <p>Price: $8</p>
+        </div>
+      </div>
+      <div class="menu-item">
+        <img src="https://img.freepik.com/free-photo/healthy-lunch-vegetarian-pasta-with-fresh-tomato-generated-by-ai_24640-81714.jpg" alt="Pasta">
+        <div class="menu-item-content">
+          <h2>Pasta</h2>
+          <p>Classic spaghetti with meatballs.</p>
+          <p>Price: $12</p>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2024 Food Ordering & Delivery App
+  </footer>
+</body>
+</html>

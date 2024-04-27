@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Ordering & Delivery App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: black;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background-color: darkgoldenrod;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+    }
+
+    nav {
+      background-color: darkolivegreen;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: whitesmoke;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .hero-section {
+      background-image: url("https://cdn.pixabay.com/photo/2016/03/05/19/37/appetite-1238459_1280.jpg");
+      background-size: cover;
+      background-position: center;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .cta-button {
+      background-color: #ff5733;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .cta-button:hover {
+      background-color: #e64a2e;
+    }
+
+    .features-section {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 50px;
+    }
+
+    .feature {
+      text-align: center;
+      padding: 20px;
+      max-width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .feature h2 {
+      color: whitesmoke;
+    }
+
+    .feature p {
+      color: whitesmoke;
+    }
+
+    footer {
+      background-color:darkgoldenrod;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Food Ordering & Delivery App</h1>
+  </header>
+  
+  <nav>
+    <a href="homepage.ejs">Home</a>
+    <a href="menu.ejs">Menu</a>
+    <a href="#">Services</a>
+    <a href="features.ejs">Features</a>
+    <a href="signup.ejs">Sign-up</a>
+    <a href="login.ejs">Login</a>
+    
+  </nav>
+
+  <div class="container">
+    <div class="hero-section">
+      <div class="hero-text">
+        <h2>Welcome to our Food Ordering & Delivery App</h2>
+        <p>Order delicious food from your favorite restaurants and get it delivered to your doorstep.</p>
+        <a href="menu.ejs" class="cta-button">Order Now</a>
+      </div>
+    </div>
+
+    <div class="features-section">
+      <div class="feature">
+        <h2>Easy Ordering</h2>
+        <p>Ordering food is just a few clicks away. Choose from a variety of cuisines and dishes.</p>
+      </div>
+      <div class="feature">
+        <h2>Quick Delivery</h2>
+        <p>Get your food delivered quickly and efficiently. Track your order in real-time.</p>
+      </div>
+      <div class="feature">
+        <h2>Secure Payments</h2>
+        <p>Pay for your orders securely using various payment methods available.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2024 Food Ordering & Delivery App
+  </footer>
+</body>
+</html>
