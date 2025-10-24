@@ -1,119 +1,177 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Food Ordering Signup Page</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f5f5dc;
-        background-image: url("https://static.vecteezy.com/system/resources/thumbnails/015/322/833/small_2x/chicken-dish-top-view-with-wooden-pattern-background-chicken-meat-collection-chicken-food-hand-drawn-style-illustration-vintage-design-for-restaurant-menu-and-template-vector.jpg");
-        background-repeat: no-repeat;
-        background-size: 105%;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up • FoodieDash</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0f; --muted:#9aa3af; --text:#f5f7fb; --brand:#ff6a3d; --accent:#23d5ab;
+      --border:rgba(255,255,255,.12); --glass:rgba(255,255,255,.06); --shadow:0 20px 40px rgba(0,0,0,.45);
+      --radius:18px; --speed:.25s; --ok:#2dd4bf;
+    }
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
+      background:radial-gradient(1200px 1200px at 10% -10%, #172036 0%, transparent 55%),
+                 radial-gradient(1200px 1200px at 100% 0%, #1b0f2f 0%, transparent 45%),
+                 var(--bg);
+      background-attachment:fixed;
+    }
 
-      .container {
-        max-width: 400px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        animation: slideUp 0.5s ease;
-      }
+    /* NAV */
+    .nav-wrap{position:sticky;top:0;z-index:40;backdrop-filter:saturate(1.2) blur(10px);
+      background:linear-gradient(to bottom,rgba(10,10,15,.85),rgba(10,10,15,.55));border-bottom:1px solid var(--border);}
+    .nav{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+    .brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--text);font-weight:800;}
+    .brand .logo{width:36px;height:36px;border-radius:10px;background:conic-gradient(from 210deg,var(--brand),var(--accent),#7b61ff,var(--brand));box-shadow:0 8px 24px rgba(255,106,61,.35);}
+    .links{display:flex;gap:18px;align-items:center}
+    .nav a{color:var(--text);text-decoration:none;font-weight:600;opacity:.9}
+    .links a{padding:10px 12px;border-radius:10px;transition:all var(--speed) ease}
+    .links a:hover{background:var(--glass);transform:translateY(-1px)}
+    .cta{background:linear-gradient(90deg,var(--brand),#ff8f5e);color:#0b0b0f !important;
+      padding:10px 16px;border-radius:12px;font-weight:800;box-shadow:0 10px 20px rgba(255,106,61,.25);}
+    .menu-btn{display:none;background:transparent;border:0;color:var(--text);font-size:20px;}
+    @media(max-width:900px){.links{display:none}.menu-btn{display:block}}
+    .drawer{display:none;border-top:1px solid var(--border);background:rgba(10,10,15,.9);backdrop-filter:blur(10px);}
+    .drawer.open{display:block;animation:drop .2s ease-out}
+    .drawer a{display:block;padding:14px 20px;border-bottom:1px solid var(--border);}
+    @keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(50px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+    /* PAGE */
+    .wrap{max-width:1200px;margin:24px auto;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+    @media(max-width:900px){.wrap{grid-template-columns:1fr}}
 
-      h1 {
-        background-color: #333;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-        margin-top: 0;
-        border-radius: 8px 8px 0 0;
-      }
+    .preview{border-radius:var(--radius);min-height:420px;position:relative;overflow:hidden;box-shadow:var(--shadow);
+      border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02))}
+    .preview::before{content:"";position:absolute;inset:0;
+      background:url("https://cdn.pixabay.com/photo/2016/03/05/19/37/appetite-1238459_1280.jpg") center/cover no-repeat;
+      filter:grayscale(10%) contrast(1.05) brightness(.95);transform:scale(1.03);}
+    .preview::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 40%,rgba(0,0,0,.65));}
 
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-      }
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--border);
+      border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);max-width:440px;margin:0 auto;}
+    h1{margin:6px 0 14px;font-size:28px}
+    .sub{color:var(--muted);margin:-6px 0 14px;font-size:14px}
 
-      input[type="text"],
-      input[type="email"],
-      input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-        margin-bottom: 20px;
-        transition: border-color 0.3s ease;
-      }
+    label{display:block;font-weight:700;margin:12px 0 8px}
+    .inp{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);outline:none;transition:border-color var(--speed) ease,background var(--speed) ease;}
+    .inp:focus{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
+    .strength{font-size:12px;margin-top:-10px;margin-bottom:6px;color:var(--muted)}
+    .btn{width:100%;appearance:none;border:0;cursor:pointer;font-weight:800;letter-spacing:.2px;
+      padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--brand),#ff8f5e);color:#0b0b0f;
+      box-shadow:0 14px 28px rgba(255,106,61,.28);margin-top:12px;transition:transform var(--speed) ease;}
+    .btn:hover{transform:translateY(-2px)}
+    .alt{margin-top:12px;font-size:14px;color:var(--muted)}
+    .alt a{color:#ffd166;text-decoration:none;font-weight:700}
+    .alt a:hover{text-decoration:underline}
 
-      input[type="text"]:focus,
-      input[type="email"]:focus,
-      input[type="password"]:focus {
-        border-color: #333;
-      }
+    .msg{display:none;margin-bottom:12px;padding:12px;border-radius:12px;font-size:14px;border:1px solid var(--border);}
+    .msg.err{display:block;background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.35)}
+    footer{margin-top:40px;border-top:1px solid var(--border);background:rgba(10,10,15,.7);backdrop-filter:blur(10px);}
+    .foot{max-width:1200px;margin:auto;padding:22px 20px;color:var(--muted);font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <div class="nav-wrap">
+    <nav class="nav">
+      <a class="brand" href="/index.ejs"><span class="logo"></span><span>FoodieDash</span></a>
+      <div class="links">
+        <a href="/index.ejs">Home</a>
+        <a href="/menu.ejs">Menu</a>
+        <a href="/features.ejs">Features</a>
+        <a class="cta" href="/signup.ejs">Sign up</a>
+        <a href="/login.ejs">Login</a>
+      </div>
+      <button class="menu-btn" id="menuBtn">☰</button>
+    </nav>
+    <div class="drawer" id="drawer">
+      <a href="/index.ejs">Home</a>
+      <a href="/menu.ejs">Menu</a>
+      <a href="/features.ejs">Features</a>
+      <a href="/signup.ejs">Sign up</a>
+      <a href="/login.ejs">Login</a>
+    </div>
+  </div>
 
-      input[type="submit"] {
-        background-color: #333;
-        color: #fff;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        width: 100%;
-        transition: background-color 0.3s ease;
-      }
+  <!-- SIGNUP FORM -->
+  <main class="wrap">
+    <div class="preview" aria-hidden="true"></div>
 
-      input[type="submit"]:hover {
-        background-color: #444;
-      }
+    <section class="card">
+      <div id="flash" class="msg"></div>
+      <h1>Create account</h1>
+      <p class="sub">Join FoodieDash and start ordering today.</p>
 
-      .footer {
-        background-color: black;
-        color: red;
-        padding: 10px;
-        border-radius: 0 0 8px;
-        text-align: center;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Signup</h1>
-      <form action="/register" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-  
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-  
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-  
-        <input type="submit" value="Signup">
+      <form action="/signup" method="post" novalidate>
+        <label for="username">Username</label>
+        <input class="inp" type="text" id="username" name="username" placeholder="Your name" required>
+
+        <label for="email">Email</label>
+        <input class="inp" type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="username">
+
+        <label for="password">Password</label>
+        <input class="inp" type="password" id="password" name="password" placeholder="••••••••" required autocomplete="new-password">
+        <div class="strength" id="strengthText">Password strength: —</div>
+
+        <label for="confirm">Confirm password</label>
+        <input class="inp" type="password" id="confirm" placeholder="••••••••" required autocomplete="new-password">
+
+        <button class="btn" type="submit">Sign Up</button>
       </form>
-      <p>Already have an account? <a href="login.ejs">Login</a></p>
+
+      <p class="alt">Already have an account? <a href="/login.ejs">Log in</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <span>© 2024 FoodieDash</span>
+      <span>Powered by Node.js • Express • EJS</span>
     </div>
-    <div class="footer">
-      &copy; 2024 Food Ordering Site
-    </div>
-  </body>
+  </footer>
+
+  <script>
+    // Mobile nav
+    const menuBtn=document.getElementById('menuBtn');
+    const drawer=document.getElementById('drawer');
+    menuBtn?.addEventListener('click',()=>drawer.classList.toggle('open'));
+
+    // Flash error from URL: ?error=Email%20already%20registered
+    (function(){
+      const params=new URLSearchParams(window.location.search);
+      const flash=document.getElementById('flash');
+      if(params.get('error')){
+        flash.textContent=params.get('error');
+        flash.className='msg err';
+      }
+    })();
+
+    // Password strength meter
+    const pwd=document.getElementById('password');
+    const strengthText=document.getElementById('strengthText');
+    pwd.addEventListener('input',()=>{
+      const v=pwd.value;
+      let score=0;
+      if(v.length>=8) score++;
+      if(/[A-Z]/.test(v)) score++;
+      if(/[0-9]/.test(v)) score++;
+      if(/[^A-Za-z0-9]/.test(v)) score++;
+      const levels=["Weak","Fair","Good","Strong"];
+      strengthText.textContent="Password strength: "+(score?levels[score-1]:"—");
+    });
+
+    // Confirm password match
+    const form=document.querySelector('form');
+    const confirm=document.getElementById('confirm');
+    form.addEventListener('submit',e=>{
+      if(pwd.value!==confirm.value){
+        e.preventDefault();
+        alert("Passwords do not match!");
+      }
+    });
+  </script>
+</body>
 </html>

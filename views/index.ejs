@@ -1,149 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Food Ordering & Delivery App</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: black;
-    }
+    :root{ --bg:#0b0b0f; --card:#12121a; --muted:#9aa3af; --text:#f5f7fb; --brand:#ff6a3d; --brand-2:#ffd166; --accent:#23d5ab; --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.12); --shadow:0 20px 40px rgba(0,0,0,.45); --radius:18px; --radius-sm:12px; --speed:.25s; }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{ margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif; color:var(--text);
+      background: radial-gradient(1200px 1200px at 10% -10%, #172036 0%, transparent 55%), radial-gradient(1200px 1200px at 100% 0%, #1b0f2f 0%, transparent 45%), var(--bg); background-attachment: fixed; }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+    .nav-wrap{ position:sticky; top:0; z-index:40; backdrop-filter:saturate(1.2) blur(10px);
+      background:linear-gradient(to bottom, rgba(10,10,15,.85), rgba(10,10,15,.55)); border-bottom:1px solid var(--border); }
+    .nav{ max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; }
+    .brand{ display:flex; gap:10px; align-items:center; text-decoration:none; color:var(--text); font-weight:800; letter-spacing:.2px; }
+    .brand .logo{ width:36px; height:36px; border-radius:10px; background: conic-gradient(from 210deg, var(--brand), var(--accent), #7b61ff, var(--brand)); box-shadow: 0 8px 24px rgba(255,106,61,.35); }
+    .nav a{ color:var(--text); text-decoration:none; font-weight:600; opacity:.9 }
+    .links{ display:flex; gap:18px; align-items:center }
+    .links a{ padding:10px 12px; border-radius:10px; transition:all var(--speed) ease }
+    .links a:hover{ background:var(--glass); transform:translateY(-1px) }
+    .cta{ background:linear-gradient(90deg, var(--brand), #ff8f5e); color:#0b0b0f !important; padding:10px 16px; border-radius:12px; font-weight:800; box-shadow:0 10px 20px rgba(255,106,61,.25); }
+    .menu-btn{ display:none; background:transparent; border:0; color:var(--text); font-size:20px; }
+    @media (max-width:900px){ .links{ display:none } .menu-btn{ display:block } }
+    .drawer{ display:none; border-top:1px solid var(--border); background:rgba(10,10,15,.9); backdrop-filter: blur(10px); }
+    .drawer.open{ display:block; animation:drop .2s ease-out }
+    .drawer a{ display:block; padding:14px 20px; border-bottom:1px solid var(--border); }
+    @keyframes drop{ from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:translateY(0)} }
 
-    header {
-      background-color: darkgoldenrod;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      position: sticky;
-    }
+    .hero{ position:relative; isolation:isolate; max-width:1200px; margin:28px auto 0; padding:40px 20px 20px; }
+    .hero-card{ position:relative; overflow:hidden; border-radius:var(--radius); box-shadow:var(--shadow);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--border); min-height:440px; display:grid; grid-template-columns:1.2fr 1fr; }
+    @media (max-width:900px){ .hero-card{ grid-template-columns:1fr; min-height:auto } }
+    .hero-media{ position:relative; min-height:420px; background:#0c0c12; }
+    .hero-media::before{ content:""; position:absolute; inset:0;
+      background:url("https://cdn.pixabay.com/photo/2016/03/05/19/37/appetite-1238459_1280.jpg") center/cover no-repeat;
+      filter:grayscale(10%) contrast(1.1) brightness(.9); transform:scale(1.03); }
+    .hero-media::after{ content:""; position:absolute; inset:0; background:linear-gradient(120deg, rgba(0,0,0,.55), rgba(0,0,0,.15) 40%, rgba(0,0,0,.65)); }
+    .hero-content{ padding:34px; display:flex; flex-direction:column; justify-content:center; gap:18px; }
+    .badge{ align-self:flex-start; background:linear-gradient(90deg, var(--accent), #7b61ff); padding:6px 12px; border-radius:999px; font-weight:800; color:#0b0b0f; letter-spacing:.2px; }
+    h1{ margin:0; font-size:42px; line-height:1.1 }
+    .sub{ color:var(--muted); font-size:16px }
+    .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:6px }
+    .btn{ appearance:none; border:0; cursor:pointer; font-weight:800; letter-spacing:.2px; padding:12px 16px; border-radius:12px; transition: all var(--speed) ease; }
+    .btn-primary{ background:linear-gradient(90deg, var(--brand), #ff8f5e); color:#0b0b0f; box-shadow:0 14px 28px rgba(255,106,61,.28); }
+    .btn-primary:hover{ transform:translateY(-2px) }
+    .btn-ghost{ background:transparent; color:var(--text); border:1px solid var(--border) }
+    .btn-ghost:hover{ background:var(--glass) }
 
-    nav {
-      background-color: darkolivegreen;
-      padding: 10px;
-      text-align: center;
-    }
-
-    nav a {
-      color: whitesmoke;
-      text-decoration: none;
-      margin: 0 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .hero-section {
-      background-image: url("https://cdn.pixabay.com/photo/2016/03/05/19/37/appetite-1238459_1280.jpg");
-      background-size: cover;
-      background-position: center;
-      height: 400px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      text-align: center;
-    }
-
-    .hero-text {
-      max-width: 600px;
-    }
-
-    .cta-button {
-      background-color: #ff5733;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      text-decoration: none;
-    }
-
-    .cta-button:hover {
-      background-color: #e64a2e;
-    }
-
-    .features-section {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 50px;
-    }
-
-    .feature {
-      text-align: center;
-      padding: 20px;
-      max-width: 300px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    .feature h2 {
-      color: whitesmoke;
-    }
-
-    .feature p {
-      color: whitesmoke;
-    }
-
-    footer {
-      background-color:darkgoldenrod;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
+    .section{ max-width:1200px; margin:30px auto; padding:0 20px }
+    .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    @media (max-width:900px){ .grid{ grid-template-columns:1fr } }
+    .card{ background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid var(--border); border-radius:var(--radius-sm); padding:20px; box-shadow:var(--shadow); transform:translateY(0); transition:transform var(--speed) ease, border-color var(--speed) ease, box-shadow var(--speed) ease; }
+    .card:hover{ transform:translateY(-4px); border-color:rgba(255,255,255,.25) }
+    .icon{ width:44px; height:44px; border-radius:12px; display:grid; place-items:center; margin-bottom:12px; background:linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid var(--border); }
+    h3{ margin:6px 0 6px } p{ color:var(--muted); margin:0 }
+    footer{ margin-top:40px; border-top:1px solid var(--border); background:rgba(10,10,15,.7); backdrop-filter: blur(10px); }
+    .foot{ max-width:1200px; margin:auto; padding:22px 20px; color:var(--muted); font-size:14px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .reveal{ opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease } .reveal.show{ opacity:1; transform:translateY(0) }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Food Ordering & Delivery App</h1>
-  </header>
-  
-  <nav>
-    <a href="homepage.ejs">Home</a>
-    <a href="menu.ejs">Menu</a>
-    <a href="#">Services</a>
-    <a href="features.ejs">Features</a>
-    <a href="signup.ejs">Sign-up</a>
-    <a href="login.ejs">Login</a>
-    
-  </nav>
+  <!-- NAV -->
+  <div class="nav-wrap">
+    <nav class="nav">
+      <a class="brand" href="/index.ejs">
+        <span class="logo"></span>
+        <span>FoodieDash</span>
+      </a>
 
-  <div class="container">
-    <div class="hero-section">
-      <div class="hero-text">
-        <h2>Welcome to our Food Ordering & Delivery App</h2>
-        <p>Order delicious food from your favorite restaurants and get it delivered to your doorstep.</p>
-        <a href="menu.ejs" class="cta-button">Order Now</a>
-      </div>
-    </div>
+      <div class="links">
+        <a href="/index.ejs">Home</a>
+        <a href="/menu.ejs">Menu</a>
+        <a href="/features.ejs">Features</a>
 
-    <div class="features-section">
-      <div class="feature">
-        <h2>Easy Ordering</h2>
-        <p>Ordering food is just a few clicks away. Choose from a variety of cuisines and dishes.</p>
+        <% if (!username) { %>
+          <a href="/signup.ejs">Sign up</a>
+          <a class="cta" href="/login.ejs">Login</a>
+        <% } else { %>
+          <span style="opacity:.9">Hi, <strong><%= username %></strong></span>
+          <form action="/logout" method="post" style="display:inline;">
+            <button class="cta" type="submit" style="cursor:pointer">Logout</button>
+          </form>
+        <% } %>
       </div>
-      <div class="feature">
-        <h2>Quick Delivery</h2>
-        <p>Get your food delivered quickly and efficiently. Track your order in real-time.</p>
-      </div>
-      <div class="feature">
-        <h2>Secure Payments</h2>
-        <p>Pay for your orders securely using various payment methods available.</p>
-      </div>
+
+      <button class="menu-btn" aria-label="Open menu" id="menuBtn">☰</button>
+    </nav>
+    <div class="drawer" id="drawer">
+      <a href="/index.ejs">Home</a>
+      <a href="/menu.ejs">Menu</a>
+      <a href="/features.ejs">Features</a>
+      <% if (!username) { %>
+        <a href="/signup.ejs">Sign up</a>
+        <a href="/login.ejs">Login</a>
+      <% } else { %>
+        <span style="display:block;padding:14px 20px;opacity:.85;">Hi, <strong><%= username %></strong></span>
+        <form action="/logout" method="post" style="padding:10px 20px;">
+          <button type="submit" class="btn btn-primary" style="width:100%;">Logout</button>
+        </form>
+      <% } %>
     </div>
   </div>
 
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-card reveal">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-content">
+        <span class="badge">
+          <% if (username) { %>Welcome back, <%= username %>!<% } else { %>Fast • Fresh • Secure<% } %>
+        </span>
+
+        <h1>
+          <% if (username) { %>
+            Crave it. Tap it. <br/> Let’s eat, <%= username %>!
+          <% } else { %>
+            Crave it. Tap it. <br/> Get it delivered.
+          <% } %>
+        </h1>
+
+        <p class="sub">Order from top restaurants near you. Real-time tracking, blazing-fast delivery, and secure payments — all in one place.</p>
+
+        <div class="hero-actions">
+          <a href="/menu.ejs" class="btn btn-primary">Order Now</a>
+          <a href="/features.ejs" class="btn btn-ghost">See Features</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="grid">
+      <article class="card reveal">
+        <div class="icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M7 2v8a2 2 0 1 1-4 0V2M5 22V12M13 8h4V2m0 6v14M13 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>One-Tap Ordering</h3>
+        <p>Reorder your favourites instantly with smart suggestions personalized to your taste.</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M6 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm12 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM9 15h6m2-7h-3l3 7h3l-3-7Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Blazing Delivery</h3>
+        <p>Live order tracking with ETA. Our network gets hot meals to you fast.</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l7 3v5c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Secure Payments</h3>
+        <p>Cards, UPI, and wallets — fully encrypted with instant refunds on cancellations.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    &copy; 2024 Food Ordering & Delivery App
+    <div class="foot">
+      <span>© 2024 FoodieDash</span>
+      <span>Powered by Node.js • Express • EJS</span>
+    </div>
   </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const drawer = document.getElementById('drawer');
+    menuBtn.addEventListener('click', ()=> drawer.classList.toggle('open'));
+
+    const els = document.querySelectorAll('.reveal');
+    const reveal = ()=>{
+      const h = window.innerHeight;
+      els.forEach(el=>{
+        const top = el.getBoundingClientRect().top;
+        if(top < h - 80) el.classList.add('show');
+      });
+    };
+    reveal();
+    window.addEventListener('scroll', reveal);
+  </script>
 </body>
 </html>

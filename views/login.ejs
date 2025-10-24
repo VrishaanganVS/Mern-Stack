@@ -1,113 +1,205 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Food Ordering Login Page</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f5f5dc;
-        background-image: url("https://static.vecteezy.com/system/resources/thumbnails/015/322/833/small_2x/chicken-dish-top-view-with-wooden-pattern-background-chicken-meat-collection-chicken-food-hand-drawn-style-illustration-vintage-design-for-restaurant-menu-and-template-vector.jpg");
-        background-repeat: no-repeat;
-        background-size: 105%;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login • FoodieDash</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0f; --card:#12121a; --muted:#9aa3af; --text:#f5f7fb;
+      --brand:#ff6a3d; --accent:#23d5ab; --border:rgba(255,255,255,.12);
+      --glass:rgba(255,255,255,.06); --shadow:0 20px 40px rgba(0,0,0,.45);
+      --radius:18px; --radius-sm:12px; --speed:.25s;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
+      background:
+        radial-gradient(1200px 1200px at 10% -10%, #172036 0%, transparent 55%),
+        radial-gradient(1200px 1200px at 100% 0%, #1b0f2f 0%, transparent 45%),
+        var(--bg);
+      background-attachment: fixed;
+    }
 
-      .container {
-        max-width: 400px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease;
-      }
+    /* NAV (same theme as homepage) */
+    .nav-wrap{ position:sticky; top:0; z-index:40; backdrop-filter:saturate(1.2) blur(10px);
+      background:linear-gradient(to bottom, rgba(10,10,15,.85), rgba(10,10,15,.55)); border-bottom:1px solid var(--border);}
+    .nav{ max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:14px 20px;}
+    .brand{ display:flex; gap:10px; align-items:center; text-decoration:none; color:var(--text); font-weight:800;}
+    .brand .logo{ width:36px; height:36px; border-radius:10px;
+      background: conic-gradient(from 210deg, var(--brand), var(--accent), #7b61ff, var(--brand));
+      box-shadow:0 8px 24px rgba(255,106,61,.35);}
+    .links{ display:flex; gap:18px; align-items:center }
+    .nav a{ color:var(--text); text-decoration:none; font-weight:600; opacity:.9 }
+    .links a{ padding:10px 12px; border-radius:10px; transition:all var(--speed) ease }
+    .links a:hover{ background:var(--glass); transform:translateY(-1px) }
+    .cta{ background:linear-gradient(90deg, var(--brand), #ff8f5e); color:#0b0b0f !important;
+      padding:10px 16px; border-radius:12px; font-weight:800; box-shadow:0 10px 20px rgba(255,106,61,.25);}
+    .menu-btn{ display:none; background:transparent; border:0; color:var(--text); font-size:20px;}
+    @media (max-width:900px){ .links{display:none} .menu-btn{display:block} }
+    .drawer{ display:none; border-top:1px solid var(--border); background:rgba(10,10,15,.9); backdrop-filter: blur(10px);}
+    .drawer.open{ display:block; animation:drop .2s ease-out }
+    .drawer a{ display:block; padding:14px 20px; border-bottom:1px solid var(--border); }
+    @keyframes drop{ from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:translateY(0)} }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
+    /* PAGE */
+    .wrap{ max-width:1200px; margin:24px auto; padding:20px; }
+    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:center }
+    @media (max-width:900px){ .grid{ grid-template-columns:1fr } }
 
-      h1 {
-        background-color: #333;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-        margin-top: 0;
-        border-radius: 8px 8px 0 0;
-      }
+    .preview{
+      border-radius:var(--radius); min-height:420px; position:relative; overflow:hidden; box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    }
+    .preview::before{
+      content:""; position:absolute; inset:0;
+      background:url("https://cdn.pixabay.com/photo/2016/03/05/19/37/appetite-1238459_1280.jpg") center/cover no-repeat;
+      filter:grayscale(10%) contrast(1.1) brightness(.9); transform:scale(1.03);
+    }
+    .preview::after{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(120deg, rgba(0,0,0,.55), rgba(0,0,0,.15) 40%, rgba(0,0,0,.65));
+    }
 
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-        transition: color 0.3s ease;
-      }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--border); border-radius:var(--radius); padding:22px;
+      box-shadow:var(--shadow); max-width:440px; margin:0 auto;
+      transform:translateY(0); transition:transform var(--speed) ease, border-color var(--speed) ease;
+    }
+    .card:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,.25) }
 
-      input[type="email"],
-      input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-        margin-bottom: 20px;
-        transition: border-color 0.3s ease;
-      }
+    h1{ margin:6px 0 14px; font-size:28px }
+    .sub{ color:var(--muted); margin:-6px 0 14px; font-size:14px }
 
-      input[type="email"]:focus,
-      input[type="password"]:focus {
-        border-color: #333;
-      }
+    label{ display:block; font-weight:700; margin:12px 0 8px }
+    .inp{
+      width:100%; padding:12px 12px; border-radius:12px; border:1px solid var(--border);
+      background:rgba(255,255,255,.04); color:var(--text); outline:none;
+      transition:border-color var(--speed) ease, background var(--speed) ease;
+    }
+    .inp:focus{ border-color:rgba(255,255,255,.28); background:rgba(255,255,255,.06) }
 
-      input[type="submit"] {
-        background-color: #333;
-        color: #fff;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        width: 100%;
-        transition: background-color 0.3s ease;
-      }
+    .row{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:6px }
+    .hint{ color:var(--muted); font-size:12px }
+    .err{ background:rgba(255,106,61,.12); border:1px solid rgba(255,106,61,.35); color:#ffd2c4;
+      padding:10px 12px; border-radius:12px; margin-bottom:10px; }
 
-      input[type="submit"]:hover {
-        background-color: #444;
-      }
+    .btn{
+      width:100%; appearance:none; border:0; cursor:pointer; font-weight:800; letter-spacing:.2px;
+      padding:12px 16px; border-radius:12px; transition: transform var(--speed) ease, box-shadow var(--speed) ease;
+      background:linear-gradient(90deg, var(--brand), #ff8f5e); color:#0b0b0f;
+      box-shadow:0 14px 28px rgba(255,106,61,.28); margin-top:12px;
+    }
+    .btn:hover{ transform:translateY(-2px) }
 
-      .footer {
-        background-color: black;
-        color: red;
-        padding: 10px;
-        border-radius: 0 0 8px;
-        text-align: center;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Login</h1>
-      <form action="/login" method="post">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-  
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-  
-        <input type="submit" value="Login">
-      </form>
-      <p>Don't have an account? <a href="signup.ejs">Sign up</a></p>
+    .alt{ margin-top:12px; font-size:14px; color:var(--muted) }
+    .alt a{ color:#ffd166; text-decoration:none; font-weight:700 }
+    .alt a:hover{ text-decoration:underline }
+
+    footer{ margin-top:40px; border-top:1px solid var(--border); background:rgba(10,10,15,.7); backdrop-filter: blur(10px);}
+    .foot{ max-width:1200px; margin:auto; padding:22px 20px; color:var(--muted); font-size:14px;
+      display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <div class="nav-wrap">
+    <nav class="nav">
+      <a class="brand" href="/index.ejs">
+        <span class="logo"></span>
+        <span>FoodieDash</span>
+      </a>
+      <div class="links">
+        <a href="/index.ejs">Home</a>
+        <a href="/menu.ejs">Menu</a>
+        <a href="/features.ejs">Features</a>
+        <a href="/signup.ejs">Sign up</a>
+        <a class="cta" href="/login.ejs">Login</a>
+      </div>
+      <button class="menu-btn" aria-label="Open menu" id="menuBtn">☰</button>
+    </nav>
+    <div class="drawer" id="drawer">
+      <a href="/index.ejs">Home</a>
+      <a href="/menu.ejs">Menu</a>
+      <a href="/features.ejs">Features</a>
+      <a href="/signup.ejs">Sign up</a>
+      <a href="/login.ejs">Login</a>
     </div>
-    <div class="footer">
-      &copy; 2024 Food Ordering Site
+  </div>
+
+  <main class="wrap">
+    <div class="grid">
+      <div class="preview" aria-hidden="true"></div>
+
+      <section class="card">
+        <h1>Welcome back</h1>
+        <p class="sub">Login to continue your order.</p>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="err"><%= error %></div>
+        <% } %>
+
+        <form action="/login" method="post" novalidate>
+          <label for="email">Email</label>
+          <input class="inp" type="email" id="email" name="email" placeholder="you@example.com" required>
+
+          <label for="password">Password</label>
+          <div style="position:relative">
+            <input class="inp" type="password" id="password" name="password" placeholder="••••••••" required>
+            <button type="button" id="togglePwd" aria-label="Show password"
+              style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:transparent; border:0; color:var(--muted); cursor:pointer;">
+              👁
+            </button>
+          </div>
+
+          <div class="row">
+            <label class="hint"><input type="checkbox" id="remember" style="vertical-align:middle; margin-right:6px;"> Remember me</label>
+            <a href="#" class="hint" style="text-decoration:none;">Forgot password?</a>
+          </div>
+
+          <button class="btn" type="submit">Login</button>
+        </form>
+
+        <p class="alt">Don’t have an account? <a href="/signup.ejs">Create one</a></p>
+      </section>
     </div>
-  </body>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <span>© 2024 FoodieDash</span>
+      <span>Powered by Node.js • Express • EJS</span>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile drawer
+    const menuBtn = document.getElementById('menuBtn');
+    const drawer = document.getElementById('drawer');
+    menuBtn.addEventListener('click', ()=> drawer.classList.toggle('open'));
+
+    // Show/Hide password
+    const toggle = document.getElementById('togglePwd');
+    const pwd = document.getElementById('password');
+    toggle.addEventListener('click', ()=>{
+      const t = pwd.getAttribute('type') === 'password' ? 'text' : 'password';
+      pwd.setAttribute('type', t);
+      toggle.textContent = t === 'password' ? '👁' : '🙈';
+    });
+
+    // Basic client-side validation hint
+    document.querySelector('form').addEventListener('submit', (e)=>{
+      const email = document.getElementById('email').value.trim();
+      const pass  = document.getElementById('password').value;
+      if(!email || !pass){
+        e.preventDefault();
+        alert('Please enter both email and password.');
+      }
+    });
+  </script>
+</body>
 </html>
